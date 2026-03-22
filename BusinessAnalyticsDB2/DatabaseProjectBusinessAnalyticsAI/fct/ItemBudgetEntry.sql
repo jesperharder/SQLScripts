@@ -1,0 +1,30 @@
+CREATE TABLE [fct].[ItemBudgetEntry] (
+    [PostingDateKey]        INT             CONSTRAINT [DF_ItemBudgetEntry_PostingDate] DEFAULT ((-1)) NOT NULL,
+    [CompanyKey]            INT             CONSTRAINT [DF_ItemBudgetEntry_Company] DEFAULT ((-1)) NOT NULL,
+    [BudgetVersionKey]      INT             CONSTRAINT [DF_ItemBudgetEntry_BudgetVersion] DEFAULT ((-1)) NOT NULL,
+    [ItemKey]               INT             CONSTRAINT [DF_ItemBudgetEntry_Item] DEFAULT ((-1)) NOT NULL,
+    [CustomerKey]           INT             CONSTRAINT [DF_ItemBudgetEntry_Customer] DEFAULT ((-1)) NOT NULL,
+    [DepartmentKey]         INT             CONSTRAINT [DF_ItemBudgetEntry_Department] DEFAULT ((-1)) NOT NULL,
+    [ChainKey]              INT             CONSTRAINT [DF_ItemBudgetEntry_Chain] DEFAULT ((-1)) NOT NULL,
+    [GeographyKey]          INT             CONSTRAINT [DF_ItemBudgetEntry_Geography] DEFAULT ((-1)) NOT NULL,
+    [EmployeeKey]           INT             CONSTRAINT [DF_ItemBudgetEntry_Employee] DEFAULT ((-1)) NOT NULL,
+    [LocationKey]           INT             CONSTRAINT [DF_ItemBudgetEntry_Location] DEFAULT ((-1)) NOT NULL,
+    [CurrencyCompanyKey]    INT             CONSTRAINT [DF_ItemBudgetEntry_CompanyCurrency] DEFAULT ((-1)) NOT NULL,
+    [M_Quantity]            DECIMAL (18, 6) NULL,
+    [M_CostPrice]           DECIMAL (18, 6) NULL,
+    [M_SalesPrice]          DECIMAL (18, 6) NULL,
+    [M_CostAmount_LCY]      DECIMAL (18, 6) NULL,
+    [M_SalesAmount_LCY]     DECIMAL (18, 6) NULL,
+    [ItemBudgetCompanyID]   INT             NOT NULL,
+    [NK_BudgetAnalysisArea] NVARCHAR (8)    NOT NULL,
+    [NK_BudgetSourceType]   NVARCHAR (8)    NOT NULL,
+    [NK_EntryNo]            INT             NOT NULL,
+    [NK_PostingDate]        DATETIME        NOT NULL,
+    [ADF_FactSource]        NVARCHAR (128)  NOT NULL,
+    [ADF_LastTimestamp]     VARBINARY (8)   CONSTRAINT [DF_ItemBudgetEntry_timestamp] DEFAULT (0x) NOT NULL,
+    CONSTRAINT [PK_ItemBudgetEntry] PRIMARY KEY CLUSTERED ([ItemBudgetCompanyID] ASC, [NK_BudgetAnalysisArea] ASC, [NK_BudgetSourceType] ASC, [NK_EntryNo] ASC, [NK_PostingDate] ASC, [ADF_FactSource] ASC) WITH (DATA_COMPRESSION = ROW)
+);
+
+
+GO
+

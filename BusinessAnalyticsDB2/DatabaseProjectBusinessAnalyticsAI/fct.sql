@@ -1,0 +1,6 @@
+CREATE SCHEMA [fct]
+    AUTHORIZATION [dbo];
+
+
+GO
+

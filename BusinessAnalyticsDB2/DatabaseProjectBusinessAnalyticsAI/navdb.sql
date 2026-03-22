@@ -1,0 +1,6 @@
+CREATE SCHEMA [navdb]
+    AUTHORIZATION [dbo];
+
+
+GO
+

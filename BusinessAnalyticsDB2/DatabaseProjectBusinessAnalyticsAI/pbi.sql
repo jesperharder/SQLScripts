@@ -1,0 +1,6 @@
+CREATE SCHEMA [pbi]
+    AUTHORIZATION [dbo];
+
+
+GO
+

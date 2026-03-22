@@ -1,0 +1,30 @@
+CREATE TABLE [fct].[Capacity] (
+    [PostingDateKey]     INT             CONSTRAINT [DF_Capacity_PostingDate] DEFAULT ((-1)) NOT NULL,
+    [DocumentDateKey]    INT             CONSTRAINT [DF_Capacity_DocumentDate] DEFAULT ((-1)) NOT NULL,
+    [MachineCenterKey]   INT             CONSTRAINT [DF_Capacity_MachineCenter] DEFAULT ((-1)) NOT NULL,
+    [WorkcenterKey]      INT             CONSTRAINT [DF_Capacity_Workcenter] DEFAULT ((-1)) NOT NULL,
+    [DepartmentKey]      INT             CONSTRAINT [DF_Capacity_Department] DEFAULT ((-1)) NOT NULL,
+    [EmployeeKey]        INT             CONSTRAINT [DF_Capacity_Employee] DEFAULT ((-1)) NOT NULL,
+    [RoutingKey]         INT             CONSTRAINT [DF_Capacity_Routing] DEFAULT ((-1)) NOT NULL,
+    [ItemKey]            INT             CONSTRAINT [DF_Capacity_Item] DEFAULT ((-1)) NOT NULL,
+    [StopKey]            INT             CONSTRAINT [DF_Capacity_Stop] DEFAULT ((-1)) NOT NULL,
+    [ScrapKey]           INT             CONSTRAINT [DF_Capacity_Scrap] DEFAULT ((-1)) NOT NULL,
+    [ProductionOrderKey] INT             CONSTRAINT [DF_Capacity_ProductionOrder] DEFAULT ((-1)) NOT NULL,
+    [BOMKey]             INT             CONSTRAINT [DF_Capacity_BOM] DEFAULT ((-1)) NOT NULL,
+    [CompanyKey]         INT             CONSTRAINT [DF_Capacity_Company] DEFAULT ((-1)) NOT NULL,
+    [M_Quantity]         DECIMAL (18, 4) NULL,
+    [M_InvoicedQuantity] DECIMAL (18, 4) NULL,
+    [M_OutputQuantity]   DECIMAL (18, 4) NULL,
+    [M_ScrapQuantity]    DECIMAL (18, 4) NULL,
+    [M_RunTime]          DECIMAL (18, 4) NULL,
+    [M_StopTime]         DECIMAL (18, 4) NULL,
+    [CompanyID]          INT             NOT NULL,
+    [NK_EntryNo]         INT             NOT NULL,
+    [ADF_FactSource]     NVARCHAR (128)  CONSTRAINT [DF_Capacity_FactSource] DEFAULT (N'Default') NOT NULL,
+    [ADF_LastTimestamp]  VARBINARY (8)   CONSTRAINT [DF_Capacity_LastTimestamp] DEFAULT (0x) NOT NULL,
+    CONSTRAINT [PK_Capacity] PRIMARY KEY CLUSTERED ([NK_EntryNo] ASC, [CompanyID] ASC, [ADF_FactSource] ASC) WITH (DATA_COMPRESSION = ROW)
+);
+
+
+GO
+

@@ -1,0 +1,5 @@
+CREATE USER [pl@scanpan.dk] FOR EXTERNAL PROVIDER;
+
+
+GO
+
