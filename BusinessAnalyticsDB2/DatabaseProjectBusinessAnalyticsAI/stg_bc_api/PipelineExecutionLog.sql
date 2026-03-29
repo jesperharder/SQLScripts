@@ -30,7 +30,7 @@ CREATE TABLE [stg_bc_api].[PipelineExecutionLog] (
     [CreatedAt]           DATETIME2 (0)    CONSTRAINT [DF_PipelineExecutionLog_CreatedAt] DEFAULT (sysutcdatetime()) NOT NULL,
     [ModifiedAt]          DATETIME2 (0)    CONSTRAINT [DF_PipelineExecutionLog_ModifiedAt] DEFAULT (sysutcdatetime()) NOT NULL,
     CONSTRAINT [PK_PipelineExecutionLog] PRIMARY KEY CLUSTERED ([LogId] ASC),
-    CONSTRAINT [CK_PipelineExecutionLog_PipelineLevel] CHECK ([PipelineLevel]='Child' OR [PipelineLevel]='Country' OR [PipelineLevel]='Master'),
+    CONSTRAINT [CK_PipelineExecutionLog_PipelineLevel] CHECK ([PipelineLevel]='Child' OR [PipelineLevel]='Country' OR [PipelineLevel]='Master' OR [PipelineLevel]='Dim' OR [PipelineLevel]='Fact'),
     CONSTRAINT [CK_PipelineExecutionLog_Status] CHECK ([Status]='CompletedWithErrors' OR [Status]='Failed' OR [Status]='Succeeded' OR [Status]='Started')
 );
 

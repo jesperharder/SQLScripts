@@ -22,6 +22,7 @@ CREATE TABLE [stg_bc_api].[SalesLine] (
     [purchOrderLineNo]             INT                NULL,
     [specialOrderPurchaseNo]       NVARCHAR (20)      NULL,
     [specialOrderPurchLineNo]      INT                NULL,
+    [usedCampaignNOTO]             NVARCHAR (255)     NULL,
     [attachedToLineNo]             INT                NULL,
 
     [type]                         NVARCHAR (50)      NULL,
