@@ -18,12 +18,17 @@ CREATE TABLE [stg_bc_api].[SalesCrMemoLine] (
     [quantity]              DECIMAL (38, 20) NULL,
     [quantityBase]          DECIMAL (38, 20) NULL,
     [unitPrice]             DECIMAL (38, 20) NULL,
+    [unitCost]              DECIMAL (38, 20) NULL,
+    [unitCostLCY]           DECIMAL (38, 20) NULL,
     [lineDiscountPercent]   DECIMAL (38, 20) NULL,
     [lineDiscountAmount]    DECIMAL (38, 20) NULL,
     [lineAmount]            DECIMAL (38, 20) NULL,
     [amount]                DECIMAL (38, 20) NULL,
     [amountIncludingVAT]    DECIMAL (38, 20) NULL,
+    [shortcutDim1Code]      NVARCHAR (20)    NULL,
+    [genBusPostingGroup]    NVARCHAR (20)    NULL,
     [genProdPostingGroup]   NVARCHAR (20)    NULL,
+    [dimensionSetId]        INT              NULL,
     [vatProdPostingGroup]   NVARCHAR (20)    NULL,
     [vatPercent]            DECIMAL (38, 20) NULL,
     [returnReasonCode]      NVARCHAR (10)    NULL,
@@ -43,7 +48,7 @@ GO
 
 CREATE NONCLUSTERED INDEX [IX_stg_bc_api_SalesCrMemoLine_Document]
     ON [stg_bc_api].[SalesCrMemoLine]([CompanyId] ASC, [documentNo] ASC)
-    INCLUDE([lineNo], [type], [typeInt], [no], [description], [yearcodeText], [quantity], [unitPrice], [lineAmount], [amount], [amountIncludingVAT]);
+    INCLUDE([lineNo], [type], [typeInt], [no], [description], [yearcodeText], [quantity], [unitPrice], [unitCost], [unitCostLCY], [lineAmount], [amount], [amountIncludingVAT], [shortcutDim1Code], [genBusPostingGroup], [genProdPostingGroup], [dimensionSetId], [returnReasonCode]);
 
 
 GO
@@ -56,14 +61,14 @@ GO
 
 CREATE NONCLUSTERED INDEX [IX_stg_bc_api_SalesCrMemoLine_SystemModifiedAt]
     ON [stg_bc_api].[SalesCrMemoLine]([CompanyId] ASC, [systemModifiedAt] ASC, [documentNo] ASC, [lineNo] ASC)
-    INCLUDE([type], [typeInt], [no], [yearcodeText], [quantity], [amount], [PipelineRunId]);
+    INCLUDE([type], [typeInt], [no], [yearcodeText], [quantity], [amount], [unitCost], [unitCostLCY], [shortcutDim1Code], [genBusPostingGroup], [genProdPostingGroup], [dimensionSetId], [returnReasonCode], [PipelineRunId]);
 
 
 GO
 
 CREATE NONCLUSTERED INDEX [IX_stg_bc_api_SalesCrMemoLine_Item]
     ON [stg_bc_api].[SalesCrMemoLine]([CompanyId] ASC, [no] ASC, [variantCode] ASC)
-    INCLUDE([documentNo], [lineNo], [type], [yearcodeText], [quantity], [quantityBase], [locationCode], [unitOfMeasureCode], [amount]);
+    INCLUDE([documentNo], [lineNo], [type], [yearcodeText], [quantity], [quantityBase], [locationCode], [unitOfMeasureCode], [amount], [unitCost], [unitCostLCY], [genBusPostingGroup], [genProdPostingGroup], [dimensionSetId]);
 
 
 GO
