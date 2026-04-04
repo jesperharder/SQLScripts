@@ -22,6 +22,9 @@ CREATE TABLE [stg_bc_api].[ProdOrderLine] (
     [startingDate]        DATE               NULL,
     [endingDate]          DATE               NULL,
     [dueDate]             DATE               NULL,
+    [startingDateTime]    DATETIME2 (7)      NULL,
+    [endingDateTime]      DATETIME2 (7)      NULL,
+    [dimensionSetId]      INT                NULL,
     [systemCreatedAt]     DATETIME2 (7)      NULL,
     [systemCreatedBy]     UNIQUEIDENTIFIER   NULL,
     [systemModifiedAt]    DATETIME2 (7)      NULL,
@@ -50,7 +53,7 @@ GO
 
 CREATE NONCLUSTERED INDEX [IX_ProdOrderLine_Lookups]
     ON [stg_bc_api].[ProdOrderLine]([CompanyId] ASC, [prodOrderNo] ASC)
-    INCLUDE([status], [lineNo], [itemNo], [variantCode], [unitOfMeasureCode], [locationCode], [binCode], [productionBOMNo], [routingNo], [routingRefNo], [remainingQuantity], [finishedQuantity], [dueDate]);
+    INCLUDE([status], [lineNo], [itemNo], [variantCode], [unitOfMeasureCode], [locationCode], [binCode], [productionBOMNo], [routingNo], [routingRefNo], [remainingQuantity], [finishedQuantity], [dueDate], [startingDateTime], [endingDateTime], [dimensionSetId]);
 
 
 GO

@@ -10,6 +10,7 @@ CREATE TABLE [stg_bc_api].[ProductionOrder] (
     [binCode]             NVARCHAR (20)      NULL,
     [routingNo]           NVARCHAR (20)      NULL,
     [quantity]            DECIMAL (18, 5)    NULL,
+    [creationDate]        DATE               NULL,
     [startingDate]        DATE               NULL,
     [endingDate]          DATE               NULL,
     [dueDate]             DATE               NULL,
@@ -44,7 +45,7 @@ GO
 
 CREATE NONCLUSTERED INDEX [IX_ProductionOrder_Lookups]
     ON [stg_bc_api].[ProductionOrder]([CompanyId] ASC, [no] ASC)
-    INCLUDE([status], [statusInt], [startingDate], [endingDate], [dueDate], [locationCode], [routingNo], [quantity], [shortcutDim1Code], [shortcutDim2Code]);
+    INCLUDE([status], [statusInt], [creationDate], [startingDate], [endingDate], [dueDate], [locationCode], [routingNo], [quantity], [shortcutDim1Code], [shortcutDim2Code]);
 
 
 GO
