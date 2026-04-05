@@ -39,6 +39,7 @@ WHERE [gle].[postingDate] IS NOT NULL
       ([gle].[CompanyId] = 1 AND [gle].[glAccountNo] IN (N'91201', N'91202'))
       OR ([gle].[CompanyId] = 2 AND [gle].[glAccountNo] IN (N'491201', N'491202'))
       OR (CAST([gle].[postingDate] AS DATE) = [gle].[postingDate] AND [gle].[CompanyId] IN (1, 2))
+      OR [gle].[CompanyId] NOT IN (1, 2)
   );
 
 
