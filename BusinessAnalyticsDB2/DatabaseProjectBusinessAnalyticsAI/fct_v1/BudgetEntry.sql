@@ -1,4 +1,4 @@
-﻿CREATE TABLE [fct_v1].[BudgetEntry] (
+CREATE TABLE [fct_v1].[BudgetEntry] (
     [PostingDateKey] INT CONSTRAINT [DF_BudgetEntry_PostingDate] DEFAULT ((-1)) NOT NULL,
     [CompanyKey] INT CONSTRAINT [DF_BudgetEntry_Company] DEFAULT ((-1)) NOT NULL,
     [BudgetVersionKey] INT CONSTRAINT [DF_BudgetEntry_BudgetVersion] DEFAULT ((-1)) NOT NULL,
@@ -12,6 +12,7 @@
     [NK_EntryNo] INT NOT NULL,
     [NK_PostingDate] DATE NOT NULL,
     [ADF_FactSource] NVARCHAR (128) NOT NULL,
+    [ADF_SourceModifiedAt] DATETIME2 (7) NULL,
     [ADF_LastTimestamp] VARBINARY (8) CONSTRAINT [DF_BudgetEntry_timestamp] DEFAULT (0x) NOT NULL,
     CONSTRAINT [PK_BudgetEntry] PRIMARY KEY CLUSTERED ([CompanyID] ASC, [NK_EntryNo] ASC, [NK_PostingDate] ASC, [ADF_FactSource] ASC)
 );

@@ -1,5 +1,6 @@
 CREATE TABLE [stg_bc_api].[GLBudgetEntry] (
     [CompanyId]            INT                NOT NULL,
+    [entryNo]              INT                NOT NULL,
     [budgetName]           NVARCHAR (20)      NOT NULL,
     [glAccountNo]          NVARCHAR (20)      NOT NULL,
     [date]                 DATE               NOT NULL,
@@ -16,7 +17,7 @@ CREATE TABLE [stg_bc_api].[GLBudgetEntry] (
     [PipelineName]         NVARCHAR (200)     NULL,
     [PipelineRunId]        NVARCHAR (100)     NULL,
     [PipelineTriggerTime]  DATETIMEOFFSET (7) NULL,
-    CONSTRAINT [PK_GLBudgetEntry] PRIMARY KEY CLUSTERED ([CompanyId] ASC, [budgetName] ASC, [glAccountNo] ASC, [date] ASC, [businessUnitCode] ASC, [globalDimension1Code] ASC, [globalDimension2Code] ASC)
+    CONSTRAINT [PK_GLBudgetEntry] PRIMARY KEY CLUSTERED ([CompanyId] ASC, [entryNo] ASC)
 );
 
 
@@ -24,6 +25,12 @@ GO
 
 CREATE NONCLUSTERED INDEX [IX_GLBudgetEntry_Company_SystemModified]
     ON [stg_bc_api].[GLBudgetEntry]([CompanyId] ASC, [systemModifiedAt] ASC);
+
+
+GO
+
+CREATE UNIQUE NONCLUSTERED INDEX [UX_GLBudgetEntry_BusinessKey]
+    ON [stg_bc_api].[GLBudgetEntry]([CompanyId] ASC, [budgetName] ASC, [glAccountNo] ASC, [date] ASC, [businessUnitCode] ASC, [globalDimension1Code] ASC, [globalDimension2Code] ASC);
 
 
 GO
