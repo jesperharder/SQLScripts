@@ -1,4 +1,4 @@
-﻿CREATE TABLE [fct_v1].[FinanceEntry] (
+CREATE TABLE [fct_v1].[FinanceEntry] (
     [PostingDateKey] INT CONSTRAINT [DF_FinanceEntry_PostingDate] DEFAULT ((-1)) NULL,
     [CompanyKey] INT CONSTRAINT [DF_FinanceEntry_Company] DEFAULT ((-1)) NULL,
     [FinanceAccountKey] INT CONSTRAINT [DF_FinanceEntry_FinanceAccount] DEFAULT ((-1)) NULL,
@@ -14,19 +14,16 @@
     [NK_EntryNo] INT NULL,
     [NK_PostingDate] DATETIME NULL,
     [FactSource] NVARCHAR (128) NULL,
+    [ADF_SourceModifiedAt] DATETIME2 (7) NULL,
     [timestamp] VARBINARY (8) CONSTRAINT [DF_FinanceEntry_timestamp] DEFAULT (0x) NULL
 );
 
-GO
-
-CREATE NONCLUSTERED INDEX [nci_msft_1_FinanceEntry_2D6EDE675EFCC4F8DB46457AC1B51B3A]
-    ON [fct_v1].[FinanceEntry]([NK_PostingDate] ASC, [FactSource] ASC)
-    INCLUDE ([timestamp])
 
 GO
 
 CREATE NONCLUSTERED INDEX [NIX_fct_FinanceEntry_FactSource_WithIncluded]
     ON [fct_v1].[FinanceEntry]([NK_PostingDate] ASC, [FactSource] ASC)
-    INCLUDE ([timestamp])
+    INCLUDE([timestamp], [ADF_SourceModifiedAt]);
+
 
 GO
