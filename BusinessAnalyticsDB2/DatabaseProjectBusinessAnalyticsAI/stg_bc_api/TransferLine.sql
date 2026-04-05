@@ -35,6 +35,7 @@ CREATE TABLE [stg_bc_api].[TransferLine] (
     [receiptDate]              DATE               NULL,
     [shortcutDim1Code]         NVARCHAR (20)      NULL,
     [shortcutDim2Code]         NVARCHAR (20)      NULL,
+    [dimensionSetId]           INT                NULL,
     [derivedFromLineNo]        INT                NULL,
     [directTransfer]           BIT                NULL,
     [shippingAgentCode]        NVARCHAR (10)      NULL,
@@ -56,7 +57,7 @@ GO
 
 CREATE NONCLUSTERED INDEX [IX_TransferLine_SystemModifiedAt]
     ON [stg_bc_api].[TransferLine]([CompanyId] ASC, [systemModifiedAt] ASC)
-    INCLUDE([documentNo], [lineNo], [itemNo], [statusInt], [shipmentDate], [receiptDate], [quantity], [outstandingQuantity]);
+    INCLUDE([documentNo], [lineNo], [itemNo], [statusInt], [shipmentDate], [receiptDate], [quantity], [outstandingQuantity], [dimensionSetId]);
 
 
 GO
@@ -69,7 +70,7 @@ GO
 
 CREATE NONCLUSTERED INDEX [IX_TransferLine_Document]
     ON [stg_bc_api].[TransferLine]([CompanyId] ASC, [documentNo] ASC)
-    INCLUDE([lineNo], [itemNo], [variantCode], [statusInt], [shipmentDate], [receiptDate], [quantity], [outstandingQuantity], [systemModifiedAt]);
+    INCLUDE([lineNo], [itemNo], [variantCode], [statusInt], [shipmentDate], [receiptDate], [quantity], [outstandingQuantity], [systemModifiedAt], [dimensionSetId]);
 
 
 GO

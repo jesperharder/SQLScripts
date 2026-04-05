@@ -22,6 +22,7 @@ CREATE TABLE [stg_bc_api].[TransferHeader] (
     [assignedUserId]           NVARCHAR (50)      NULL,
     [shortcutDim1Code]         NVARCHAR (20)      NULL,
     [shortcutDim2Code]         NVARCHAR (20)      NULL,
+    [dimensionSetId]           INT                NULL,
     [completelyShipped]        BIT                NULL,
     [completelyReceived]       BIT                NULL,
     [systemId]                 UNIQUEIDENTIFIER   NULL,
@@ -46,7 +47,7 @@ GO
 
 CREATE NONCLUSTERED INDEX [IX_TransferHeader_SystemModifiedAt]
     ON [stg_bc_api].[TransferHeader]([CompanyId] ASC, [systemModifiedAt] ASC)
-    INCLUDE([no], [statusInt], [transferFromCode], [transferToCode], [shipmentDate], [receiptDate], [directTransfer]);
+    INCLUDE([no], [statusInt], [transferFromCode], [transferToCode], [shipmentDate], [receiptDate], [directTransfer], [dimensionSetId]);
 
 
 GO
@@ -60,7 +61,7 @@ GO
 
 CREATE NONCLUSTERED INDEX [IX_TransferHeader_Locations]
     ON [stg_bc_api].[TransferHeader]([CompanyId] ASC, [transferFromCode] ASC, [transferToCode] ASC, [shipmentDate] ASC)
-    INCLUDE([no], [statusInt], [receiptDate], [inTransitCode], [directTransfer], [systemModifiedAt]);
+    INCLUDE([no], [statusInt], [receiptDate], [inTransitCode], [directTransfer], [systemModifiedAt], [dimensionSetId]);
 
 
 GO
