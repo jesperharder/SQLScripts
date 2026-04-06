@@ -7,6 +7,13 @@ CREATE TABLE [fct_v1].[BOMExplosion] (
     [TopBOMKey] INT CONSTRAINT [DF_BOMExplosion_TopBOM] DEFAULT ((-1)) NOT NULL,
     [LocationKey] INT NULL,
     [CompanyID] INT NOT NULL,
+    [NK_LocationCode] NVARCHAR (20) NULL,
+    [NK_TopItemNo] NVARCHAR (20) NOT NULL,
+    [NK_ParentItemNo] NVARCHAR (20) NULL,
+    [NK_ComponentNo] NVARCHAR (20) NULL,
+    [NK_TopBOMNo] NVARCHAR (20) NOT NULL,
+    [NK_ParentBOMNo] NVARCHAR (20) NULL,
+    [NK_SelectedVersionCode] NVARCHAR (20) NOT NULL,
     [LocationCode] NVARCHAR (20) NULL,
     [TopItemNo] NVARCHAR (20) NOT NULL,
     [ParentItemNo] NVARCHAR (20) NULL,
@@ -43,7 +50,7 @@ CREATE TABLE [fct_v1].[BOMExplosion] (
 GO
 
 CREATE UNIQUE NONCLUSTERED INDEX [UX_BOMExplosion_TopItem_Path]
-    ON [fct_v1].[BOMExplosion]([CompanyID] ASC, [TopItemNo] ASC, [PathKey] ASC);
+    ON [fct_v1].[BOMExplosion]([CompanyID] ASC, [NK_TopItemNo] ASC, [PathKey] ASC);
 
 
 GO
