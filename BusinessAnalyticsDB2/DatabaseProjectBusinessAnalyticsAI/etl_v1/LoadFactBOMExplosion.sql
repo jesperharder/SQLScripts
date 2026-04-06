@@ -1,9 +1,20 @@
 CREATE PROCEDURE [etl_v1].[LoadFactBOMExplosion]
+    @CompanyID INT,
+    @TopItemNo NVARCHAR(20)
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    TRUNCATE TABLE [fct_v1].[BOMExplosion];
+    IF @CompanyID IS NULL AND @TopItemNo IS NULL
+    BEGIN
+        TRUNCATE TABLE [fct_v1].[BOMExplosion];
+    END
+    ELSE
+    BEGIN
+        DELETE FROM [fct_v1].[BOMExplosion]
+        WHERE (@CompanyID IS NULL OR [CompanyID] = @CompanyID)
+          AND (@TopItemNo IS NULL OR [TopItemNo] = @TopItemNo);
+    END
 
     INSERT INTO [fct_v1].[BOMExplosion]
     (
@@ -41,7 +52,9 @@ BEGIN
         [BOMStatus],
         [SystemModifiedAtMax]
     )
-    EXEC [etl_v1].[GetRowsFactBOMExplosion];
+    EXEC [etl_v1].[GetRowsFactBOMExplosion]
+        @CompanyID = @CompanyID,
+        @TopItemNo = @TopItemNo;
 END;
 
 

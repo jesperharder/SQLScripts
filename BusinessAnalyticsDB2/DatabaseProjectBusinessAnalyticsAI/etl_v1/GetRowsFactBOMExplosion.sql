@@ -1,9 +1,18 @@
 CREATE PROCEDURE [etl_v1].[GetRowsFactBOMExplosion]
+    @CompanyID INT,
+    @TopItemNo NVARCHAR(20)
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    WITH [TopItems] AS
+    WITH [ExplodableItems] AS
+    (
+        SELECT DISTINCT
+            [source].[CompanyID],
+            [source].[OwnerItemNo]
+        FROM [etl_v1].[BOMExplosionSource] AS [source]
+    ),
+    [TopItems] AS
     (
         SELECT
             [source].[CompanyID],
@@ -17,6 +26,8 @@ BEGIN
             [source].[BOMStatus],
             MAX([source].[SystemModifiedAtMax]) AS [SystemModifiedAtMax]
         FROM [etl_v1].[BOMExplosionSource] AS [source]
+        WHERE (@CompanyID IS NULL OR [source].[CompanyID] = @CompanyID)
+          AND (@TopItemNo IS NULL OR [source].[OwnerItemNo] = @TopItemNo)
         GROUP BY
             [source].[CompanyID],
             [source].[CompanyKey],
@@ -189,25 +200,16 @@ BEGIN
         [result].[IsTopNode],
         CAST(
             CASE
-                WHEN EXISTS
-                (
-                    SELECT 1
-                    FROM [etl_v1].[BOMExplosionSource] AS [next_level]
-                    WHERE [next_level].[CompanyID] = [result].[CompanyID]
-                      AND [next_level].[OwnerItemNo] = [result].[ComponentNo]
-                      AND [result].[ComponentItemKey] > 0
-                ) THEN 0
+                WHEN [explodable].[OwnerItemNo] IS NOT NULL AND [result].[ComponentItemKey] > 0 THEN 0
                 ELSE 1
             END AS BIT
         ) AS [IsLeaf],
         [result].[BOMStatus],
         [result].[SystemModifiedAtMax]
     FROM [RecursiveExplosion] AS [result]
-    ORDER BY
-        [result].[CompanyID] ASC,
-        [result].[TopItemNo] ASC,
-        [result].[Level] ASC,
-        [result].[Path] ASC
+    LEFT JOIN [ExplodableItems] AS [explodable]
+        ON [explodable].[CompanyID] = [result].[CompanyID]
+       AND [explodable].[OwnerItemNo] = [result].[ComponentNo]
     OPTION (MAXRECURSION 32767);
 END;
 
