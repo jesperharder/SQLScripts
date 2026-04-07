@@ -21,7 +21,7 @@ BEGIN
             ELSE scmh.[sellToCountryRegionCode]
         END AS [BK_Customer_Geography_Country],
         CAST(IIF(scml.[typeInt] = 2, scml.[no], NULL) AS nvarchar(20)) AS [BK_Item],
-        ISNULL(sih.[orderNo], N'') AS [BK_SalesOrder],
+        ISNULL(NULLIF(sih.[orderNo], N''), N'Blank') AS [BK_SalesOrder],
         scmh.[documentDate] AS [BK_Date_Intake],
         scmh.[salespersonCode] AS [BK_SalesPerson],
         CAST(NULL AS nvarchar(20)) AS [BK_SalesPerson_SellToCustomer],
@@ -80,7 +80,7 @@ BEGIN
         FROM [fct_v1].[RealisedSale] AS rs
         WHERE rs.[NK_PostingDate] = scmh.[postingDate]
           AND rs.[CompanyID] = scml.[CompanyId]
-          AND rs.[NK_SalesOrderNumber] = ISNULL(sih.[orderNo], N'')
+          AND rs.[NK_SalesOrderNumber] = ISNULL(NULLIF(sih.[orderNo], N''), N'Blank')
           AND rs.[NK_DocumentNumber] = scml.[documentNo]
           AND rs.[NK_DocumentLineNumber] = scml.[lineNo]
           AND rs.[NK_LineEntryType] = N'Credit Memo'

@@ -21,7 +21,7 @@ BEGIN
             ELSE sih.[sellToCountryRegionCode]
         END AS [BK_Customer_Geography_Country],
         CAST(IIF(sil.[typeInt] = 2, sil.[no], NULL) AS nvarchar(20)) AS [BK_Item],
-        sih.[orderNo] AS [BK_SalesOrder],
+        ISNULL(NULLIF(sih.[orderNo], N''), N'Blank') AS [BK_SalesOrder],
         sih.[orderDate] AS [BK_Date_Intake],
         sih.[salespersonCode] AS [BK_SalesPerson],
         CAST(NULL AS nvarchar(20)) AS [BK_SalesPerson_SellToCustomer],
@@ -80,7 +80,7 @@ BEGIN
         FROM [fct_v1].[RealisedSale] AS rs
         WHERE rs.[NK_PostingDate] = sih.[postingDate]
           AND rs.[CompanyID] = sil.[CompanyId]
-          AND rs.[NK_SalesOrderNumber] = sih.[orderNo]
+          AND rs.[NK_SalesOrderNumber] = ISNULL(NULLIF(sih.[orderNo], N''), N'Blank')
           AND rs.[NK_DocumentNumber] = sil.[documentNo]
           AND rs.[NK_DocumentLineNumber] = sil.[lineNo]
           AND rs.[NK_LineEntryType] = N'Invoice'
