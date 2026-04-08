@@ -61,6 +61,12 @@ BEGIN
         -CAST(scml.[quantity] * scml.[unitCostLCY] AS decimal(18, 4)) AS [M_COGS_LCY],
         -CAST((CAST(scml.[amount] AS decimal(38, 6)) / CAST(ISNULL(NULLIF(scmh.[currencyFactor], 0.0), 1.0) AS decimal(38, 15))) - (scml.[quantity] * scml.[unitCostLCY]) AS decimal(18, 4)) AS [M_GM_LCY],
         CAST(ISNULL(NULLIF(scmh.[currencyFactor], 0.0), 1.0) AS decimal(18, 15)) AS [M_CurrencyFactor],
+        CAST(
+            CASE
+                WHEN scml.[systemModifiedAt] >= scmh.[systemModifiedAt] THEN scml.[systemModifiedAt]
+                ELSE scmh.[systemModifiedAt]
+            END AS datetime2(7)
+        ) AS [ADF_SourceModifiedAt],
         CAST(N'BC_SalesCrMemoLine' AS nvarchar(128)) AS [ADF_FactSource],
         existingLine.[UpdatedRow]
     FROM [stg_bc_api].[SalesCrMemoLine] AS scml

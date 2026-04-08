@@ -34,6 +34,7 @@
     [NK_LineEntrySource] NVARCHAR (50) NOT NULL,
     [NK_PostingDate] DATETIME NOT NULL,
     [CompanyID] INT NOT NULL,
+    [ADF_SourceModifiedAt] DATETIME2 (7) NULL,
     [ADF_LastTimestamp] VARBINARY (8) NOT NULL,
     [ADF_FactSource] NVARCHAR (128) NOT NULL,
     [YearCodeKey] INT NOT NULL,
@@ -52,6 +53,6 @@ GO
 
 CREATE NONCLUSTERED INDEX [nci_wi_RealisedSale_38DE12BA37802E8C411F5B8695747AB0]
     ON [fct_v1].[RealisedSale]([PostingDateKey] ASC, [ADF_FactSource] ASC)
-    INCLUDE ([ADF_LastTimestamp])
+    INCLUDE ([ADF_LastTimestamp], [ADF_SourceModifiedAt])
 
 GO

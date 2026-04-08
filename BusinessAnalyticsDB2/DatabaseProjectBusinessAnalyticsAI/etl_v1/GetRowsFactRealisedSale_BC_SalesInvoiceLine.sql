@@ -64,6 +64,12 @@ BEGIN
         CAST(sil.[quantity] * sil.[unitCostLCY] AS decimal(18, 4)) AS [M_COGS_LCY],
         CAST((CAST(sil.[amount] AS decimal(38, 6)) / CAST(ISNULL(NULLIF(sih.[currencyFactor], 0.0), 1.0) AS decimal(38, 15))) - (sil.[quantity] * sil.[unitCostLCY]) AS decimal(18, 4)) AS [M_GM_LCY],
         CAST(ISNULL(NULLIF(sih.[currencyFactor], 0.0), 1.0) AS decimal(18, 15)) AS [M_CurrencyFactor],
+        CAST(
+            CASE
+                WHEN sil.[systemModifiedAt] >= sih.[systemModifiedAt] THEN sil.[systemModifiedAt]
+                ELSE sih.[systemModifiedAt]
+            END AS datetime2(7)
+        ) AS [ADF_SourceModifiedAt],
         CAST(N'BC_SalesInvoiceLine' AS nvarchar(128)) AS [ADF_FactSource],
         existingLine.[UpdatedRow]
     FROM [stg_bc_api].[SalesInvLine] AS sil
