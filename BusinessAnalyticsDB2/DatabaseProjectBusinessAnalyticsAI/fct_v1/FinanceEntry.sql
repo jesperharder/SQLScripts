@@ -1,21 +1,21 @@
 CREATE TABLE [fct_v1].[FinanceEntry] (
-    [PostingDateKey] INT CONSTRAINT [DF_FinanceEntry_PostingDate] DEFAULT ((-1)) NULL,
-    [CompanyKey] INT CONSTRAINT [DF_FinanceEntry_Company] DEFAULT ((-1)) NULL,
-    [FinanceAccountKey] INT CONSTRAINT [DF_FinanceEntry_FinanceAccount] DEFAULT ((-1)) NULL,
-    [DepartmentKey] INT CONSTRAINT [DF_FinanceEntry_Department] DEFAULT ((-1)) NULL,
-    [ChainKey] INT CONSTRAINT [DF_FinanceEntry_Chain] DEFAULT ((-1)) NULL,
-    [CountryKey] INT CONSTRAINT [DF_FinanceEntry_Country] DEFAULT ((-1)) NULL,
-    [SupplierKey] INT CONSTRAINT [DF_FinanceEntry_Supplier] DEFAULT ((-1)) NULL,
-    [MarketingKey] INT CONSTRAINT [DF_FinanceEntry_Marketing] DEFAULT ((-1)) NULL,
-    [EmployeeKey] INT CONSTRAINT [DF_FinanceEntry_Employee] DEFAULT ((-1)) NULL,
-    [MaintainanceKey] INT CONSTRAINT [DF_FinanceEntry_Maintainance] DEFAULT ((-1)) NULL,
+    [PostingDateKey] INT CONSTRAINT [DF_FinanceEntry_PostingDate] DEFAULT ((-1)) NOT NULL,
+    [CompanyKey] INT CONSTRAINT [DF_FinanceEntry_Company] DEFAULT ((-1)) NOT NULL,
+    [FinanceAccountKey] INT CONSTRAINT [DF_FinanceEntry_FinanceAccount] DEFAULT ((-1)) NOT NULL,
+    [DepartmentKey] INT CONSTRAINT [DF_FinanceEntry_Department] DEFAULT ((-1)) NOT NULL,
+    [ChainKey] INT CONSTRAINT [DF_FinanceEntry_Chain] DEFAULT ((-1)) NOT NULL,
+    [CountryKey] INT CONSTRAINT [DF_FinanceEntry_Country] DEFAULT ((-1)) NOT NULL,
+    [SupplierKey] INT CONSTRAINT [DF_FinanceEntry_Supplier] DEFAULT ((-1)) NOT NULL,
+    [MarketingKey] INT CONSTRAINT [DF_FinanceEntry_Marketing] DEFAULT ((-1)) NOT NULL,
+    [EmployeeKey] INT CONSTRAINT [DF_FinanceEntry_Employee] DEFAULT ((-1)) NOT NULL,
+    [MaintainanceKey] INT CONSTRAINT [DF_FinanceEntry_Maintainance] DEFAULT ((-1)) NOT NULL,
     [M_Amount_LCY] DECIMAL (38, 6) NULL,
-    [CompanyID] INT NULL,
-    [NK_EntryNo] INT NULL,
-    [NK_PostingDate] DATETIME NULL,
-    [FactSource] NVARCHAR (128) NULL,
+    [CompanyID] INT NOT NULL,
+    [NK_EntryNo] INT NOT NULL,
+    [NK_PostingDate] DATETIME NOT NULL,
+    [FactSource] NVARCHAR (128) NOT NULL,
     [ADF_SourceModifiedAt] DATETIME2 (7) NULL,
-    [timestamp] VARBINARY (8) CONSTRAINT [DF_FinanceEntry_timestamp] DEFAULT (0x) NULL
+    [timestamp] VARBINARY (8) CONSTRAINT [DF_FinanceEntry_timestamp] DEFAULT (0x) NOT NULL
 );
 
 
