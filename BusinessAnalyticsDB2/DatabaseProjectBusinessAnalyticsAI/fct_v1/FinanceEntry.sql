@@ -23,7 +23,14 @@ GO
 
 CREATE NONCLUSTERED INDEX [NIX_fct_FinanceEntry_FactSource_WithIncluded]
     ON [fct_v1].[FinanceEntry]([NK_PostingDate] ASC, [FactSource] ASC)
-    INCLUDE([timestamp], [ADF_SourceModifiedAt]);
+    INCLUDE([timestamp]);
+
+
+GO
+
+CREATE NONCLUSTERED INDEX [nci_msft_1_FinanceEntry_2D6EDE675EFCC4F8DB46457AC1B51B3A]
+    ON [fct_v1].[FinanceEntry]([NK_PostingDate] ASC, [FactSource] ASC)
+    INCLUDE([timestamp]);
 
 
 GO
