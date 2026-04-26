@@ -7,7 +7,6 @@ CREATE TABLE [etl].[NavStagingCompanyStatus] (
     [Comment]       NVARCHAR (400) NULL,
     CONSTRAINT [PK_NavStagingCompanyStatus] PRIMARY KEY CLUSTERED ([CompanyID] ASC),
     CONSTRAINT [UQ_NavStagingCompanyStatus_CountryCode] UNIQUE NONCLUSTERED ([CountryCode] ASC),
-    CONSTRAINT [FK_NavStagingCompanyStatus_Company] FOREIGN KEY ([CompanyID]) REFERENCES [etl].[Company] ([CompanyId]),
     CONSTRAINT [CK_NavStagingCompanyStatus_StagingStatus] CHECK ([StagingStatus]='Historical' OR [StagingStatus]='Operational')
 );
 
@@ -18,4 +17,3 @@ CREATE NONCLUSTERED INDEX [IX_NavStagingCompanyStatus_CountryStatus]
     ON [etl].[NavStagingCompanyStatus]([CountryCode] ASC, [StagingStatus] ASC)
 
 GO
-
