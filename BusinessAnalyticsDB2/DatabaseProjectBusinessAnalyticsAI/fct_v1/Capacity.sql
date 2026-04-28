@@ -21,6 +21,7 @@
     [CompanyID] INT NOT NULL,
     [NK_EntryNo] INT NOT NULL,
     [ADF_FactSource] NVARCHAR (128) CONSTRAINT [DF_Capacity_FactSource] DEFAULT (N'Default') NOT NULL,
+    [ADF_SourceModifiedAt] DATETIME2 (7) NULL,
     [ADF_LastTimestamp] VARBINARY (8) CONSTRAINT [DF_Capacity_LastTimestamp] DEFAULT (0x) NOT NULL,
     CONSTRAINT [PK_Capacity] PRIMARY KEY CLUSTERED ([NK_EntryNo] ASC, [CompanyID] ASC, [ADF_FactSource] ASC)
 );
