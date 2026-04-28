@@ -5,7 +5,7 @@ SELECT
     itm.[CompanyId] AS [CompanyID],
     itm.[number] AS [ItemNo],
     itm.[description] AS [ItemDescription],
-    ISNULL(bom.[BOMQuantity], 1) AS [ProductionQuantity]
+    ISNULL(CAST(bom.[BOMQuantity] AS DECIMAL(38,20)), CAST(1 AS DECIMAL(38,20))) AS [ProductionQuantity]
 FROM [stg_bc_api].[Item] AS [itm]
 LEFT JOIN
 (
