@@ -8,8 +8,8 @@ SELECT
     [gbe].[glAccountNo] AS [BK_GLAccountNo],
     NULLIF([gbe].[globalDimension1Code], N'') AS [BK_Department],
     NULLIF([gbe].[globalDimension2Code], N'') AS [BK_EmployeeCode],
-    NULLIF(COALESCE(NULLIF([cr].[isoCode], N''), NULLIF([dims].[LAND], N''), NULLIF([ci].[countryRegionCode], N'')), N'') AS [BK_Country],
-    NULLIF([dims].[KÆDE], N'') AS [BK_Chain],
+    NULLIF(COALESCE(NULLIF([cr].[isoCode], N''), NULLIF([dims].[LAND], N''), NULLIF([gbe].[budgetDimension2Code], N''), NULLIF([ci].[countryRegionCode], N'')), N'') AS [BK_Country],
+    NULLIF(COALESCE(NULLIF([dims].[KÆDE], N''), NULLIF([gbe].[budgetDimension1Code], N'')), N'') AS [BK_Chain],
     CAST([gbe].[amount] AS DECIMAL(18, 6)) AS [M_Amount_LCY],
     CAST([gbe].[systemModifiedAt] AS DATETIME2(7)) AS [ADF_SourceModifiedAt],
     CAST(0x AS VARBINARY(8)) AS [ADF_LastTimestamp],
@@ -34,7 +34,7 @@ OUTER APPLY
 ) AS [dims]
 LEFT JOIN [stg_bc_api].[CountryRegion] AS [cr]
     ON [cr].[CompanyId] = [gbe].[CompanyId]
-   AND [cr].[code] = [dims].[LAND];
+   AND [cr].[code] = COALESCE(NULLIF([dims].[LAND], N''), NULLIF([gbe].[budgetDimension2Code], N''));
 
 
 GO

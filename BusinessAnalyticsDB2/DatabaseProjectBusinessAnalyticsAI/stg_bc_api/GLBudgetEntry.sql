@@ -7,7 +7,14 @@ CREATE TABLE [stg_bc_api].[GLBudgetEntry] (
     [businessUnitCode]     NVARCHAR (10)      NOT NULL,
     [globalDimension1Code] NVARCHAR (20)      NOT NULL,
     [globalDimension2Code] NVARCHAR (20)      NOT NULL,
+    [budgetDimension1Code] NVARCHAR (20)      NOT NULL,
+    [budgetDimension2Code] NVARCHAR (20)      NOT NULL,
+    [budgetDimension3Code] NVARCHAR (20)      NOT NULL,
+    [budgetDimension4Code] NVARCHAR (20)      NOT NULL,
     [amount]               DECIMAL (38, 20)   NULL,
+    [description]          NVARCHAR (100)     NULL,
+    [userId]               NVARCHAR (128)     NULL,
+    [lastDateModified]     DATE               NULL,
     [dimensionSetId]       INT                NULL,
     [systemId]             UNIQUEIDENTIFIER   NULL,
     [systemCreatedAt]      DATETIMEOFFSET (7) NULL,
@@ -28,10 +35,3 @@ CREATE NONCLUSTERED INDEX [IX_GLBudgetEntry_Company_SystemModified]
 
 
 GO
-
-CREATE UNIQUE NONCLUSTERED INDEX [UX_GLBudgetEntry_BusinessKey]
-    ON [stg_bc_api].[GLBudgetEntry]([CompanyId] ASC, [budgetName] ASC, [glAccountNo] ASC, [date] ASC, [businessUnitCode] ASC, [globalDimension1Code] ASC, [globalDimension2Code] ASC);
-
-
-GO
-
