@@ -10,6 +10,8 @@ CREATE TABLE [fct_v1].[FinanceEntry] (
     [EmployeeKey] INT CONSTRAINT [DF_FinanceEntry_Employee] DEFAULT ((-1)) NOT NULL,
     [MaintainanceKey] INT CONSTRAINT [DF_FinanceEntry_Maintainance] DEFAULT ((-1)) NOT NULL,
     [M_Amount_LCY] DECIMAL (38, 6) NULL,
+    [IsClosingEntry] BIT CONSTRAINT [DF_FinanceEntry_IsClosingEntry] DEFAULT ((0)) NOT NULL,
+    [ClosingEntryType] NVARCHAR (50) CONSTRAINT [DF_FinanceEntry_ClosingEntryType] DEFAULT (N'Ordinary') NOT NULL,
     [CompanyID] INT NOT NULL,
     [NK_EntryNo] INT NOT NULL,
     [NK_PostingDate] DATETIME NOT NULL,

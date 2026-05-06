@@ -13,6 +13,11 @@ SELECT
     NULLIF([dims].[PERSONALE], N'') AS [BK_EmployeeCode],
     NULLIF([dims].[VEDLIGEH], N'') AS [BK_Maintainance],
     CAST([gle].[amount] AS DECIMAL(38, 6)) AS [M_Amount_LCY],
+    CAST(ISNULL([gle].[priorYearEntry], CONVERT(BIT, 0)) AS BIT) AS [IsClosingEntry],
+    CASE
+        WHEN ISNULL([gle].[priorYearEntry], CONVERT(BIT, 0)) = CONVERT(BIT, 1) THEN N'PriorYearClosing'
+        ELSE N'Ordinary'
+    END AS [ClosingEntryType],
     CAST([gle].[systemModifiedAt] AS DATETIME2(7)) AS [ADF_SourceModifiedAt],
     CAST(0x AS VARBINARY(8)) AS [timestamp],
     N'BC_GLEntry' AS [FactSource]
