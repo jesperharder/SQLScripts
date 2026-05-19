@@ -30,6 +30,12 @@ CREATE NONCLUSTERED INDEX [NIX_fct_FinanceEntry_FactSource_WithIncluded]
 
 GO
 
+CREATE UNIQUE NONCLUSTERED INDEX [UX_fct_v1_FinanceEntry_FactSource_Company_PostingDate_EntryNo]
+    ON [fct_v1].[FinanceEntry]([FactSource] ASC, [CompanyID] ASC, [NK_PostingDate] ASC, [NK_EntryNo] ASC);
+
+
+GO
+
 CREATE NONCLUSTERED INDEX [nci_msft_1_FinanceEntry_2D6EDE675EFCC4F8DB46457AC1B51B3A]
     ON [fct_v1].[FinanceEntry]([NK_PostingDate] ASC, [FactSource] ASC)
     INCLUDE([timestamp]);

@@ -124,6 +124,13 @@ CREATE NONCLUSTERED INDEX [IX_ValueEntry_CompanyId_ItemLedgerEntryNo]
 
 GO
 
+CREATE NONCLUSTERED INDEX [IX_ValueEntry_CompanyId_ProductionOrderStatistics]
+    ON [stg_bc_api].[ValueEntry]([CompanyId] ASC, [orderTypeInt] ASC, [orderNo] ASC, [orderLineNo] ASC)
+    INCLUDE([costAmountActual], [costAmountExpected], [itemLedgerEntryTypeInt], [capacityLedgerEntryNo], [entryTypeInt], [varianceTypeInt]);
+
+
+GO
+
 CREATE UNIQUE NONCLUSTERED INDEX [UX_ValueEntry_CompanyId_entryNo]
     ON [stg_bc_api].[ValueEntry]([CompanyId] ASC, [entryNo] ASC);
 
