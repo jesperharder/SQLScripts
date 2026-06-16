@@ -1,0 +1,5 @@
+C:\Users\jespe\OneDrive - Scanpan\Scanpan (7.1.2015)\Development\SQL scripts\BusinessAnalyticsDB2\DatabaseProjectBusinessAnalyticsAI\bin\Debug\DatabaseProjectBusinessAnalyticsAI.dacpac
+C:\Users\jespe\OneDrive - Scanpan\Scanpan (7.1.2015)\Development\SQL scripts\BusinessAnalyticsDB2\DatabaseProjectBusinessAnalyticsAI\obj\Debug\Model.xml
+C:\Users\jespe\OneDrive - Scanpan\Scanpan (7.1.2015)\Development\SQL scripts\BusinessAnalyticsDB2\DatabaseProjectBusinessAnalyticsAI\obj\Debug\refactor.xml
+C:\Users\jespe\OneDrive - Scanpan\Scanpan (7.1.2015)\Development\SQL scripts\BusinessAnalyticsDB2\DatabaseProjectBusinessAnalyticsAI\obj\Debug\postdeploy.sql
+C:\Users\jespe\OneDrive - Scanpan\Scanpan (7.1.2015)\Development\SQL scripts\BusinessAnalyticsDB2\DatabaseProjectBusinessAnalyticsAI\obj\Debug\predeploy.sql

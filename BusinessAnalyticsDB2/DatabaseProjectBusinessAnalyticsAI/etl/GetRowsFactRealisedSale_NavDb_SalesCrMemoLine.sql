@@ -4,6 +4,8 @@ CREATE   PROCEDURE [etl].[GetRowsFactRealisedSale_NavDb_SalesCrMemoLine]
 --2024.07.31JH:     Added dummy CampaignNo
 --2024.08.28JH:     Bug in CompanyInformation changed from stg_bc to, INNER JOIN [stg_navdb].[CompanyInformation] AS [ci]
 --2024.09.03JH:     Adjusted Where to include all new dates from companies not in 1 and 2
+--2026.06 Codex:   Company 3+4 now emit customer-card Chain Code + Chain Group Code so
+--                 facts can resolve against the shared dim.Chain grain.
 
 (
     @LastTimestamp nvarchar(24) = N'0x'
@@ -84,9 +86,18 @@ BEGIN
           --,NULLIF([DEFDIM].[Dimension Value Code], N'') AS [BK_ChainCode]
           ,CASE WHEN [scml].CompanyID = 2 THEN
                    NULLIF([NODIM].[Dimension Value Code], N'') 
+                WHEN [scml].CompanyID IN (3,4) THEN
+                   NULLIF([c].[Chain Code], N'')
                 ELSE
                    NULLIF([DEFDIM].[Dimension Value Code], N'') 
             END AS [BK_ChainCode]
+          ,CASE WHEN [scml].CompanyID = 2 THEN
+                   NULLIF([NODIM].[Dimension Value Code], N'') 
+                WHEN [scml].CompanyID IN (3,4) THEN
+                   NULLIF([c].[Chain Group Code], N'')
+                ELSE
+                   NULLIF([DEFDIM].[Dimension Value Code], N'') 
+            END AS [BK_ChainGroupCode]
 
 
 

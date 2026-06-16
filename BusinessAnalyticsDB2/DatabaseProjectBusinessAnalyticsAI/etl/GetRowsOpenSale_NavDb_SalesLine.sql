@@ -1,6 +1,8 @@
 
 CREATE PROCEDURE [etl].[GetRowsOpenSale_NavDb_SalesLine]
 -- 2024.08 JH: Added Salesline lookup
+-- 2026.06 Codex: Company 3+4 now emit customer-card Chain Code + Chain Group Code so
+-- facts can resolve against the shared dim.Chain grain.
 (
     @LastTimestamp NVARCHAR(24) = N'0x',
     @UpdateType INT = 3
@@ -56,9 +58,15 @@ BEGIN
         [sl].[Gen_ Prod_ Posting Group],
         NULLIF([sl].[Shortcut Dimension 1 Code], '') AS [BK_Department],
         CASE
+            WHEN [sl].CompanyID IN (3,4) THEN NULLIF([c].[Chain Code], N'')
             WHEN [sl].CompanyID = 2 THEN NULLIF([NODIM].[Dimension Value Code], N'') 
             ELSE NULLIF([DEFDIM].[Dimension Value Code], N'') 
         END AS [BK_ChainCode],
+        CASE
+            WHEN [sl].CompanyID IN (3,4) THEN NULLIF([c].[Chain Group Code], N'')
+            WHEN [sl].CompanyID = 2 THEN NULLIF([NODIM].[Dimension Value Code], N'') 
+            ELSE NULLIF([DEFDIM].[Dimension Value Code], N'') 
+        END AS [BK_ChainGroupCode],
 
         -- Values
         CAST([sl].[Quantity] AS DECIMAL(18, 4)) AS [M_Quantity],

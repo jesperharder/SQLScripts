@@ -3,6 +3,7 @@ CREATE   PROCEDURE [etl].[GetRowsFactRealisedSale_BC_SalesCrMemoLine]
 --2024.04 JH: Changed Chain Dimension to Fetch Current Customer Setup
 --2024.05.24JH:     Added CustomerTable for lookup to current Sell-To salesperson
 --2024.07.31JH:     Added dummy CampaignNo
+--2026.06 Codex:   Emit BK_ChainGroupCode alongside BK_ChainCode for shared dim.Chain lookup.
 
 (
     @LastTimestamp nvarchar(24) = N'0x'
@@ -82,6 +83,7 @@ BEGIN
           --2024.04 JH: Changed Chain Dimension to Fetch Current Customer Setup
           --,NULLIF([dims].[KÆDE], '') AS [BK_ChainCode]
           ,NULLIF(CURR_CUSTOMER_CHAIN.DefaultDimensionDimensionValueCode, '') as [BK_ChainCode]
+          ,NULLIF(CURR_CUSTOMER_CHAIN.DefaultDimensionDimensionValueCode, '') as [BK_ChainGroupCode]
 
           --,[dims].[LAND] AS [BK_CountryCode]
           --,[dims].[LEVERANDØR] AS [BK_SupplierCode]
