@@ -6,6 +6,8 @@ CREATE   PROCEDURE [etl].[GetRowsFactRealisedSale_NavDb_SalesCrMemoLine]
 --2024.09.03JH:     Adjusted Where to include all new dates from companies not in 1 and 2
 --2026.06 Codex:   Company 3+4 now emit customer-card Chain Code + Chain Group Code so
 --                 facts can resolve against the shared dim.Chain grain.
+--2026.06 Codex:   Company 3+4 chain now lives on the NAV customer card, so customer
+--                 rowversion must participate in change detection and fact updates.
 
 (
     @LastTimestamp nvarchar(24) = N'0x'
@@ -21,7 +23,17 @@ BEGIN
     SELECT [scmh].[CompanyID]
           ,NULLIF([scml].[Shortcut Dimension 1 Code], '') AS [BK_Department]
           ,(
-               SELECT MAX([value].[v])FROM(VALUES([scml].[timestamp]), ([scmh].[timestamp])) AS [value]([v])
+               SELECT MAX([value].[v])
+               FROM
+               (
+                   VALUES
+                       ([scml].[timestamp]),
+                       ([scmh].[timestamp]),
+                       (CASE
+                            WHEN [scml].[CompanyID] IN (3,4) THEN [c].[timestamp]
+                            ELSE CONVERT(varbinary(8), 0x0000000000000000)
+                        END)
+               ) AS [value]([v])
            ) AS [timestamp]
           
           -- laguda ,ISNULL([cn].[No_], [scmh].[Sell-to Customer No_]) AS [BK_Customer]
@@ -87,14 +99,20 @@ BEGIN
           ,CASE WHEN [scml].CompanyID = 2 THEN
                    NULLIF([NODIM].[Dimension Value Code], N'') 
                 WHEN [scml].CompanyID IN (3,4) THEN
-                   NULLIF([c].[Chain Code], N'')
+                   CASE
+                       WHEN NULLIF(TRIM([c].[Chain Code]), N'') IS NULL THEN N'Blank'
+                       ELSE TRIM([c].[Chain Code])
+                   END
                 ELSE
                    NULLIF([DEFDIM].[Dimension Value Code], N'') 
             END AS [BK_ChainCode]
           ,CASE WHEN [scml].CompanyID = 2 THEN
                    NULLIF([NODIM].[Dimension Value Code], N'') 
                 WHEN [scml].CompanyID IN (3,4) THEN
-                   NULLIF([c].[Chain Group Code], N'')
+                   CASE
+                       WHEN NULLIF(TRIM([c].[Chain Group Code]), N'') IS NULL THEN N'Blank'
+                       ELSE TRIM([c].[Chain Group Code])
+                   END
                 ELSE
                    NULLIF([DEFDIM].[Dimension Value Code], N'') 
             END AS [BK_ChainGroupCode]
@@ -211,6 +229,7 @@ BEGIN
             [scml].[Posting Date] >= @PostingFrom
             OR [scml].[timestamp] > @ts
             OR [scmh].[timestamp] > @ts
+            OR ([scml].[CompanyID] IN (3,4) AND [c].[timestamp] > @ts)
             OR @UpdateType IN (3, 31)
         );
 END;

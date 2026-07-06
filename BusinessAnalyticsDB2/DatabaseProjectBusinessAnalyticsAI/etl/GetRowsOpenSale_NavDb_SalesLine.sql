@@ -58,12 +58,18 @@ BEGIN
         [sl].[Gen_ Prod_ Posting Group],
         NULLIF([sl].[Shortcut Dimension 1 Code], '') AS [BK_Department],
         CASE
-            WHEN [sl].CompanyID IN (3,4) THEN NULLIF([c].[Chain Code], N'')
+            WHEN [sl].CompanyID IN (3,4) THEN CASE
+                WHEN NULLIF(TRIM([c].[Chain Code]), N'') IS NULL THEN N'Blank'
+                ELSE TRIM([c].[Chain Code])
+            END
             WHEN [sl].CompanyID = 2 THEN NULLIF([NODIM].[Dimension Value Code], N'') 
             ELSE NULLIF([DEFDIM].[Dimension Value Code], N'') 
         END AS [BK_ChainCode],
         CASE
-            WHEN [sl].CompanyID IN (3,4) THEN NULLIF([c].[Chain Group Code], N'')
+            WHEN [sl].CompanyID IN (3,4) THEN CASE
+                WHEN NULLIF(TRIM([c].[Chain Group Code]), N'') IS NULL THEN N'Blank'
+                ELSE TRIM([c].[Chain Group Code])
+            END
             WHEN [sl].CompanyID = 2 THEN NULLIF([NODIM].[Dimension Value Code], N'') 
             ELSE NULLIF([DEFDIM].[Dimension Value Code], N'') 
         END AS [BK_ChainGroupCode],
